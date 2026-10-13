@@ -284,6 +284,85 @@ video{width:100%;border-radius:var(--radius-sm);background:#000;display:block}
   .chapter-plan-bar .cp-rest{margin-left:0}
 }
 
+/* ============================================================
+   界面美化层（2026-10-13）—— 在骨架样式之上的视觉升级
+   ============================================================ */
+
+/* 画布：柔和渐变背景 */
+body{background:linear-gradient(180deg,#F7F9FC 0%,#EEF1F8 100%)}
+
+/* 侧栏：深空渐变 + 品牌感 */
+.sidebar{background:linear-gradient(188deg,#1E2A4A 0%,#16203A 55%,#101A30 100%)}
+.sidebar-header h3{color:#7C8DB5;letter-spacing:.12em}
+.sidebar-header .course-title{background:linear-gradient(90deg,#A5B4FC 0%,#67E8F9 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sidebar-header,.sidebar-progress,.study-timer{border-bottom-color:rgba(255,255,255,.06)}
+.sidebar-footer{border-top-color:rgba(255,255,255,.06);color:#64748B}
+.progress-fill{background:linear-gradient(90deg,#6366F1,#22D3EE)}
+.nav-section{margin:2px 10px;padding:8px 12px;border-radius:0 10px 10px 0}
+.nav-section:hover{background:rgba(255,255,255,.06)}
+.nav-section.active{background:linear-gradient(90deg,rgba(99,102,241,.30),rgba(34,211,238,.08));
+  border-left-color:#818CF8}
+.nav-icon{box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.nav-section.active .nav-icon{background:linear-gradient(135deg,#6366F1,#22D3EE)}
+.nav-section.completed .nav-icon{background:linear-gradient(135deg,#059669,#34D399)}
+
+/* 主区标题：渐变文字（如模板使用 section-header） */
+.section-header h1{background:linear-gradient(90deg,#1E293B,#4F46E5);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* 卡片：大圆角 + 柔和阴影 + hover 微浮 + 标题渐变竖条 */
+.card{border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 28px -14px rgba(15,23,42,.14);
+  transition:box-shadow .25s ease,transform .25s ease}
+.card:hover{box-shadow:0 2px 4px rgba(15,23,42,.05),0 18px 38px -16px rgba(15,23,42,.20)}
+.card .card-title,.card h2{position:relative;padding-left:14px}
+.card .card-title::before,.card h2::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:4px;
+  border-radius:2px;background:linear-gradient(180deg,#6366F1,#22D3EE)}
+
+/* 按钮：渐变 + 悬浮反馈 */
+.btn{background:linear-gradient(135deg,#4F46E5,#6366F1);border-radius:10px;
+  box-shadow:0 4px 14px -4px rgba(79,70,229,.45);transition:all .2s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px -6px rgba(79,70,229,.55)}
+.btn-success{background:linear-gradient(135deg,#059669,#10B981);box-shadow:0 4px 14px -4px rgba(5,150,105,.45)}
+.btn-success:hover{box-shadow:0 8px 22px -6px rgba(5,150,105,.55)}
+.btn-outline{background:#fff;box-shadow:none}
+.btn-outline:hover{border-color:#C7D2FE;background:#F8FAFF;transform:translateY(-1px)}
+
+/* 视频：圆角 + 大阴影 */
+.video-wrapper video{border-radius:14px;box-shadow:0 14px 36px -14px rgba(15,23,42,.38)}
+
+/* 进度条：渐变填充 */
+.video-progress-info .vp-fill,.chapter-plan-bar .cp-fill{background:linear-gradient(90deg,#6366F1,#22D3EE)}
+.chapter-plan-bar{border-radius:12px;background:linear-gradient(90deg,#EEF2FF,#F0F9FF)}
+
+/* 表格：表头渐变 + 行 hover */
+.table-wrap th{background:linear-gradient(135deg,#F8FAFC,#EEF2FF)}
+.table-wrap tbody tr{transition:background .15s ease}
+.table-wrap tbody tr:hover{background:#F8FAFD}
+
+/* 练习选项：hover 反馈 */
+.quiz-option{border-radius:10px;transition:all .15s ease}
+.quiz-option:hover{border-color:#C7D2FE;background:#F5F7FF;transform:translateX(3px)}
+
+/* 提示卡：圆角统一 */
+.tips-box,.quiz-rule-card,.note-card,.goal-card{border-radius:12px}
+
+/* 证书：金边 + 更精致 */
+.cert-overlay{background:rgba(15,23,42,.62);backdrop-filter:blur(6px)}
+.cert-paper{border-radius:20px;border:none;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#FFFFFF,#FBFCFF);
+  box-shadow:0 32px 80px -28px rgba(15,23,42,.45)}
+.cert-paper::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,#F59E0B,#FDE68A,#F59E0B)}
+.cert-paper .sub{letter-spacing:.28em;color:#94A3B8}
+.cert-footer span:last-child{font-weight:700;color:#3730A3}
+
+/* Toast 弹层 */
+.toast{border-radius:10px;box-shadow:0 12px 32px -10px rgba(15,23,42,.4)}
+
+/* 移动端 header：渐变 */
+.mobile-header{background:linear-gradient(90deg,#1E2A4A,#16203A)}
+
 </style>
 </head>
 <body>
@@ -854,6 +933,8 @@ function chapterGate(i) {
 function navigateTo(index) {
   const check = canNavigateTo(index);
   if (!check.ok) { showToast('🔒 ' + check.msg, 'warning'); return; }
+  // 能进入 index 章 ⇔ 前面各章均已通过门禁（视频+测验）→ 逐一补记完成标记（幂等）
+  for (let i = 0; i < index; i++) completedSections.add(i);
   currentSection = index;
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-section').forEach(n => n.classList.remove('active'));
@@ -1052,8 +1133,13 @@ function loadProgress() {
 function checkCertificate() {
   const last = courseData.sections.length - 1;
   const lastQs = chapterQuizzes[last] || [];
-  const allDone = completedSections.size >= courseData.sections.length
-    && chapterVideosLeft(0) === 0 && (lastQs.length === 0 || chapterQuizDone[last]);
+  // 所有含测验的章都已完成（不依赖逐章 markComplete 计数，防「证书永不弹出」回归）
+  let allQuizDone = true;
+  for (let i = 0; i < courseData.sections.length; i++) {
+    const qs = chapterQuizzes[i] || [];
+    if (qs.length && !chapterQuizDone[i]) { allQuizDone = false; break; }
+  }
+  const allDone = allQuizDone && chapterVideosLeft(0) === 0;
   if (!allDone) return;
   setTimeout(() => {
     showToast('🏆 恭喜完成全部课程！点击领取结业证书', 'success');
